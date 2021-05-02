@@ -1,5 +1,5 @@
-import RepoList from './RepoList/RepolList';
 import styled from 'styled-components';
+import RepoList from './RepoList/RepoList';
 
 const MainApp = styled.div`
   display: flex;

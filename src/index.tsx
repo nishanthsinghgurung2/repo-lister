@@ -4,6 +4,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { TOKEN } from './utils/constants';
 
 
 const httpLink = createHttpLink({
@@ -11,11 +12,11 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = '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';
+  
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: TOKEN ? `Bearer ${TOKEN}` : "",
     }
   }
 });
