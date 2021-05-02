@@ -1,15 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import RepoList from './RepoList/RepolList';
+import styled from 'styled-components';
 
-function App() {
+const MainApp = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <RepoList />
-      </header>
-    </div>
+    <MainApp>
+      <RepoList />
+    </MainApp>
   );
 }
 

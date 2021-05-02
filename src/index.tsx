@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
@@ -12,7 +11,7 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = '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';
+  const token = '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';
   return {
     headers: {
       ...headers,
