@@ -1,47 +1,44 @@
-# Getting Started with Create React App
+# Github Repo Search App With Pagination
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a github repo search app that has pagination. It makes requests to the github graphQl api and fetch the results. This app was developed using the following tech stack:
+
+* React
+* Hooks
+* React testing library
+* GraphQl
+* Styled components
+* Material UI
+* Docker for production.
+* ESLint and prettier
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `yarn start`
+### `npm install`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+to load all the dependencies
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### `npm test`
 
-### `yarn test`
+to run the unit tests
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `npm start`
 
-### `yarn build`
+to start the project on local. Open `localhost:3000` on the browser to see the app.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Steps to build the react app with docker has been given below: (Make sure to install docker on your machine before running these commands)
+### `npm run build-docker-image`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+to build the docker image and tag it with a name.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `npm run test-docker-image`
 
-### `yarn eject`
+to test our image. Next, open `http://localhost` to open our app.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Note
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-# repo-lister
+* In the `src/util/constants.ts` file, I have listed the personal access token to access github api. This expires after few usages. If this expires, please send me an email and I will try to refresh the token and push it to the remote repo.
+* Images of various screens in the app is mentioned in the `src/images` directory
+* Due to time restrictions, I haven't got chance to address all eslint warnings.
+* If more time, I would love to add more test cases, extra validations and integration tests using cypress.

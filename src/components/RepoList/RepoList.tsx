@@ -43,6 +43,7 @@ const PadLeft10 = styled.span`
     padding-left: 10px
 `;
 
+// Repo list component where we can search for repos and traverse through the list through pagination
 const RepoList: React.FC  = () => {
     const {
         loading,
@@ -71,7 +72,8 @@ const RepoList: React.FC  = () => {
             <RepoListBody>
                 {error? (
                     <RepoListBodySection>
-                        <Alert 
+                        <Alert
+                            aria-label='Error fetching repos'
                             data-testid='repo-list-fetch-error'
                             severity="error"
                         >Error fetching repos from api!!!</Alert>
@@ -87,23 +89,34 @@ const RepoList: React.FC  = () => {
                                 {!data || (data && data.search && (data.search.edges.length === 0) && searchTitle)?(
                                     <Alert
                                         data-testid='repo-list-empty-warning'
+                                        aria-label='Warning empty repos'
                                         severity="warning"
                                     >No github repos found!!!</Alert>
                                 ):(
-                                    <ul data-testid='repo-list-container'>
+                                    <ul aria-label='Repo list container' data-testid='repo-list-container'>
                                         {repos && repos[page] && repos[page].map((repo, index) => (
-                                            <li data-testid={`repo-${index}`} key={`repo-${index}`}>
+                                            <li aria-label='Repo list item' data-testid={`repo-${index}`} key={`repo-${index}`}>
                                                 <RepoListItemContainer key={repo.url}>
-                                                    <a data-testid={`repo-url-${index}`} href={repo.url}>{repo.url}</a>
+                                                    <a 
+                                                        data-testid={`repo-url-${index}`}
+                                                        href={repo.url}
+                                                        aria-label='Repo url'
+                                                    >{repo.url}</a>
                                                     <PadLeft10>-</PadLeft10>
                                                     <PadLeft10>🌟</PadLeft10>
                                                     <PadLeft10>
-                                                        <div data-testid={`repo-stars-${repo.stargazerCount}`}>{repo.stargazerCount}</div>
+                                                        <div 
+                                                            data-testid={`repo-stars-${repo.stargazerCount}`}
+                                                            aria-label='Repo stars'
+                                                        >{repo.stargazerCount}</div>
                                                     </PadLeft10>
                                                     <PadLeft10>-</PadLeft10>
                                                     <PadLeft10>🍴</PadLeft10>
                                                     <PadLeft10>
-                                                        <div data-testid={`repo-forks-${repo.forkCount}`}>{repo.forkCount}</div>
+                                                        <div 
+                                                            data-testid={`repo-forks-${repo.forkCount}`}
+                                                            aria-label='Repo forks'
+                                                        >{repo.forkCount}</div>
                                                     </PadLeft10>
                                                 </RepoListItemContainer>
                                             </li>
@@ -126,12 +139,18 @@ const RepoList: React.FC  = () => {
                         siblingCount={1}
                         boundaryCount={1}
                         variant='outlined'
+                        aria-label='Repo List Pagination'
                         shape='rounded'
                         onChange={handlePageChange}
                     />
                 </RepoListBodySection>
                 <RepoListBodySection>
-                    <button data-testid='load-more-btn' onClick={onClickLoadMoreRepos} disabled={!!error}>Load more</button>
+                    <button 
+                        data-testid='load-more-btn'
+                        onClick={onClickLoadMoreRepos}
+                        disabled={!!error}
+                        aria-label='Load more repos'
+                    >Load more</button>
                 </RepoListBodySection>
             </RepoListFooter>
         </RepoListContainer>

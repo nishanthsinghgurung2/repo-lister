@@ -25,6 +25,7 @@ type RepoSearchProps = {
     onClickSearchForRepoTitles: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
+// Has the repo search text box and search button implementation.
 const RepoSearch= ({
     searchTitle,
     validationError,
@@ -38,6 +39,7 @@ const RepoSearch= ({
                     data-testid='repo-search-text'
                     type='text'
                     placeholder='Search by repo title'
+                    aria-label='Repo search input'
                     defaultValue={searchTitle}
                     required
                     onChange={onChangeRepoTitleSearch}
@@ -45,9 +47,13 @@ const RepoSearch= ({
                 <button 
                     data-testid='repo-search-btn'
                     id='repo-search-btn'
+                    aria-label='Repo search button'
                     onClick={onClickSearchForRepoTitles}
                 >Search</button>
-                {validationError? <ValidationError data-testid='repo-search-validation-error'>Invalid search title</ValidationError>: null}
+                {validationError? <ValidationError 
+                    data-testid='repo-search-validation-error'
+                    aria-label='Repo search input validation error'
+                >Invalid search title</ValidationError>: null}
             </RepoListBodySection>
         </RepoListBody>
     );

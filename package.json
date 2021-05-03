@@ -27,7 +27,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-docker-image": "docker build -t repo-lister .",
+    "test-docker-image": "docker run -p 80:80 repo-lister"
   },
   "eslintConfig": {
     "extends": [

@@ -4,7 +4,9 @@ import { PAGE_SIZE, TOTAL_REPO_FETCH_COUNT } from "../utils/constants";
 import { QUERY_REPO_LIST } from "../utils/gqlquery";
 import { Edge, Node } from "../utils/types";
 
+// State management logic separated from the UI logic of RepoList component
 const useRepoList = () => {
+
     const [repos, setRepos] = useState([] as Array<Array<Node>>);
     const [startCursor, setStartCursor] = useState(null);
     const [nextStartCursor, setNextStartCursor] = useState(null);
@@ -26,6 +28,7 @@ const useRepoList = () => {
         errorPolicy: "all"
     });
     
+    // Search button click handler that fetches the new repo lists for the search text.
     const onClickSearchForRepoTitles = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if(newSearchTitle.trim().length === 0) {
@@ -39,19 +42,25 @@ const useRepoList = () => {
         }
     };
     
+    // Search input text box update handler
     const onChangeRepoTitleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewSearchTitle(e.target.value);
     };
 
+    // Handles the page change event when different pages are clicked on pagination
     const handlePageChange = (e: React.ChangeEvent<unknown>, value: number)=> {
         setPage(value);
     };
 
+    // Fetches 100 more records from the server and adds them to the list.
     const onClickLoadMoreRepos = (e:  React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setStartCursor(nextStartCursor);
     };
    
+    // Handles the logic to store the repos in state. The github api isn't designed
+    // to handle the pagination properly. So had to write this complex logic. In real usecases,
+    // all these logic should be handled by the backend.
     useEffect(() => {
         if(data && data.search && data.search.edges) {
             let repoInfo: Array<Node> = [];
