@@ -23,6 +23,10 @@ to load all the dependencies
 
 to run the unit tests
 
+### `npm run lint`
+
+to run eslint on all the files
+
 ### `npm start`
 
 to start the project on local. Open `localhost:3000` on the browser to see the app.
