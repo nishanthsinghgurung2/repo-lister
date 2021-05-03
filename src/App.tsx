@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import RepoList from "./components/RepoList/RepoList";
+import React from 'react';
+import styled from 'styled-components';
+import RepoList from './components/RepoList/RepoList';
 
 const MainApp = styled.div`
   display: flex;
