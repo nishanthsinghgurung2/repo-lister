@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Alert, Pagination } from '@material-ui/lab';
-import RepoSearch from './RepoSearch';
+import RepoSearch from '../RepoSearch/RepoSearch';
 import { CircularProgress } from '@material-ui/core';
-import useRepoList from './useRepoList';
-import { Node } from "../utils/types";
+import useRepoList from '../../hooks/useRepoList';
 
 const RepoListContainer = styled.div`
     display: flex;
@@ -50,16 +49,15 @@ const RepoList: React.FC  = () => {
         error,
         data,
         searchTitle,
-        pageSize,
         repos,
         page,
         onClickSearchForRepoTitles,
         onChangeRepoTitleSearch,
         handlePageChange,
-        onChangePageSize,
         onClickLoadMoreRepos
     } = useRepoList();
-    
+
+
     return (
         <RepoListContainer>
             <RepoListHeader>Github Repo List</RepoListHeader>
@@ -67,13 +65,14 @@ const RepoList: React.FC  = () => {
                 searchTitle = {searchTitle}
                 onChangeRepoTitleSearch = {onChangeRepoTitleSearch}
                 onClickSearchForRepoTitles = {onClickSearchForRepoTitles}
-                onChangePageSize = {onChangePageSize}
-                pageSize = {pageSize}
             />
             <RepoListBody>
                 {error? (
                     <RepoListBodySection>
-                        <Alert severity="error">Error fetching repos from api!!!</Alert>
+                        <Alert 
+                            data-testid='repo-list-fetch-error'
+                            severity="error"
+                        >Error fetching repos from api!!!</Alert>
                     </RepoListBodySection>
                 ): null }
                 {loading? (
@@ -82,23 +81,26 @@ const RepoList: React.FC  = () => {
                     </RepoListBodySection>
                 ): (
                     <>
-                        {data && data.search && (data.search.edges.length === 0) && searchTitle?(
-                            <Alert severity="warning">No github repos found!!!</Alert>
+                        {!data || (data && data.search && (data.search.edges.length === 0) && searchTitle)?(
+                            <Alert
+                                data-testid='repo-list-empty-warning'
+                                severity="warning"
+                            >No github repos found!!!</Alert>
                         ):(
-                            <ul>
-                                {repos && repos[page] && repos[page].map((repo) => (
-                                    <li key={repo.url}>
+                            <ul data-testid='repo-list-container'>
+                                {repos && repos[page] && repos[page].map((repo, index) => (
+                                    <li data-testid={`repo-${index}`} key={`repo-${index}`}>
                                         <RepoListItemContainer key={repo.url}>
-                                            <a href={repo.url}>{repo.url}</a>
+                                            <a data-testid={`repo-url-${index}`} href={repo.url}>{repo.url}</a>
                                             <PadLeft10>-</PadLeft10>
                                             <PadLeft10>🌟</PadLeft10>
                                             <PadLeft10>
-                                                <div>{repo.stargazerCount}</div>
+                                                <div data-testid={`repo-stars-${repo.stargazerCount}`}>{repo.stargazerCount}</div>
                                             </PadLeft10>
                                             <PadLeft10>-</PadLeft10>
                                             <PadLeft10>🍴</PadLeft10>
                                             <PadLeft10>
-                                                <div>{repo.forkCount}</div>
+                                                <div data-testid={`repo-forks-${repo.forkCount}`}>{repo.forkCount}</div>
                                             </PadLeft10>
                                         </RepoListItemContainer>
                                     </li>
@@ -112,6 +114,7 @@ const RepoList: React.FC  = () => {
             <RepoListFooter hide={repos.length === 0}>
                 <RepoListBodySection>
                     <Pagination
+                        data-testid='repo-list-pagination'
                         count={repos.length - 1}
                         page={page}
                         siblingCount={1}
@@ -122,7 +125,7 @@ const RepoList: React.FC  = () => {
                     />
                 </RepoListBodySection>
                 <RepoListBodySection>
-                    <button onClick={onClickLoadMoreRepos} disabled={!!error}>Load more</button>
+                    <button data-testid='load-more-btn' onClick={onClickLoadMoreRepos} disabled={!!error}>Load more</button>
                 </RepoListBodySection>
             </RepoListFooter>
         </RepoListContainer>

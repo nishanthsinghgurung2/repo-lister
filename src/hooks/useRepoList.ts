@@ -15,7 +15,6 @@ const useRepoList = () => {
     const [totalPagesofFetchedReposCount, setTotalPagesofFetchedReposCount] = useState(0);
     const [pageSize, setPageSize] = useState(PAGE_SIZE);
     
-    
     const { loading, error, data} = useQuery(QUERY_REPO_LIST, {
         variables: {
             "first": TOTAL_REPO_FETCH_COUNT,
@@ -25,7 +24,7 @@ const useRepoList = () => {
         },
         errorPolicy: 'all'
     });
-
+    
     const onClickSearchForRepoTitles = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setRepos([]);
@@ -42,11 +41,6 @@ const useRepoList = () => {
         setPage(value);
     };
 
-    const onChangePageSize = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        e.preventDefault();
-        setPageSize(Number(e.target.value));
-        setPage(1);
-    };
     const onClickLoadMoreRepos = (e:  React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setStartCursor(nextStartCursor);
@@ -61,7 +55,6 @@ const useRepoList = () => {
             let updatedRepos = [];
 
             setTotalPagesCount(TOTAL_REPO_FETCH_COUNT);
-
             data.search.edges.forEach(( { node } : Edge, index: number) => {
                 repoInfo.push({
                     url: node? node.url: '',
@@ -96,13 +89,11 @@ const useRepoList = () => {
         error,
         data,
         searchTitle,
-        pageSize,
         repos,
         page,
         onClickSearchForRepoTitles,
         onChangeRepoTitleSearch,
         handlePageChange,
-        onChangePageSize,
         onClickLoadMoreRepos
     };
 };

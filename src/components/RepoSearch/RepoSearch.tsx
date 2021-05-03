@@ -15,28 +15,28 @@ type RepoSearchProps = {
     searchTitle: string;
     onChangeRepoTitleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onClickSearchForRepoTitles: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    onChangePageSize: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-    pageSize: number;
 };
 
 const RepoSearch = ({ 
     searchTitle,
     onChangeRepoTitleSearch,
-    onClickSearchForRepoTitles,
-    onChangePageSize,
-    pageSize
+    onClickSearchForRepoTitles
 }: RepoSearchProps) => {
     return (
         <RepoListBody>
             <RepoListBodySection>
                 <input
+                    data-testid='repo-search-text'
                     type='text'
-                    className='repo-list-form-control'
                     placeholder='Search by repo title'
                     defaultValue={searchTitle}
                     onChange={onChangeRepoTitleSearch}
                 />
-                <button onClick={onClickSearchForRepoTitles}>Search</button>
+                <button 
+                    data-testid='repo-search-btn'
+                    id='repo-search-btn'
+                    onClick={onClickSearchForRepoTitles}
+                >Search</button>
             </RepoListBodySection>
         </RepoListBody>
     );

@@ -1,3 +1,6 @@
 export const TOTAL_REPO_FETCH_COUNT = 100;
 export const PAGE_SIZE = 10;
-export const TOKEN = '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';
+// NOTE: TOKEN value needs to be updated if there is 401 error when making appi request.
+// Email me at singh.nishanth5@gmail.com if there is such error. I will fetch a new token and 
+// update this value and push the latest value on the repo.
+export const TOKEN = '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';
