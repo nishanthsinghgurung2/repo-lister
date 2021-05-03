@@ -1,14 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import { TOKEN } from './utils/constants';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import { TOKEN } from "./utils/constants";
 
 
 const httpLink = createHttpLink({
-  uri: 'https://api.github.com/graphql'
+  uri: "https://api.github.com/graphql"
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -18,7 +18,7 @@ const authLink = setContext((_, { headers }) => {
       ...headers,
       authorization: TOKEN ? `Bearer ${TOKEN}` : "",
     }
-  }
+  };
 });
 
 const client = new ApolloClient({
@@ -33,7 +33,7 @@ ReactDOM.render(
       </ApolloProvider>
     </React.StrictMode>
   ,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

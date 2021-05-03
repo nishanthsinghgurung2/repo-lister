@@ -8,12 +8,13 @@ const useRepoList = () => {
     const [repos, setRepos] = useState([] as Array<Array<Node>>);
     const [startCursor, setStartCursor] = useState(null);
     const [nextStartCursor, setNextStartCursor] = useState(null);
-    const [searchTitle, setSearchTitle] = useState('');
-    const [newSearchTitle, setNewSearchTitle] = useState('');
+    const [searchTitle, setSearchTitle] = useState("");
+    const [newSearchTitle, setNewSearchTitle] = useState("");
     const [page, setPage] = useState(1);
     const [totalPagesCount, setTotalPagesCount] = useState(0);
     const [totalPagesofFetchedReposCount, setTotalPagesofFetchedReposCount] = useState(0);
     const [pageSize, setPageSize] = useState(PAGE_SIZE);
+    const [validationError, setValidationError] = useState(false);
     
     const { loading, error, data} = useQuery(QUERY_REPO_LIST, {
         variables: {
@@ -22,15 +23,20 @@ const useRepoList = () => {
             "query": searchTitle,
             "type": "REPOSITORY"
         },
-        errorPolicy: 'all'
+        errorPolicy: "all"
     });
     
     const onClickSearchForRepoTitles = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setRepos([]);
-        setStartCursor(null);
-        setSearchTitle(newSearchTitle);
-        setPage(1);
+        if(newSearchTitle.trim().length === 0) {
+            setValidationError(true);
+        } else {
+            setValidationError(false);
+            setRepos([]);
+            setStartCursor(null);
+            setSearchTitle(newSearchTitle);
+            setPage(1);
+        }
     };
     
     const onChangeRepoTitleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +55,7 @@ const useRepoList = () => {
     useEffect(() => {
         if(data && data.search && data.search.edges) {
             let repoInfo: Array<Node> = [];
-            let updateReposInPage: Array<Array<Node>> = [];
+            const updateReposInPage: Array<Array<Node>> = [];
             let updateReposInPageIndex = 0;
             let count = 0 ;
             let updatedRepos = [];
@@ -57,7 +63,7 @@ const useRepoList = () => {
             setTotalPagesCount(TOTAL_REPO_FETCH_COUNT);
             data.search.edges.forEach(( { node } : Edge, index: number) => {
                 repoInfo.push({
-                    url: node? node.url: '',
+                    url: node? node.url: "",
                     forkCount: node? node.forkCount: 0,
                     stargazerCount: node? node.stargazerCount: 0
                 });
@@ -81,12 +87,12 @@ const useRepoList = () => {
         }
     // If we add the dependecies mentioned in the eslint suggestion infinite rerenders happens.
     // Hence had to disable the lint rule for this line.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
     return {
         loading,
         error,
+        validationError,
         data,
         searchTitle,
         repos,

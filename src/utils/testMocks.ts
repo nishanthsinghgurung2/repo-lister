@@ -1,6 +1,6 @@
 import { QUERY_REPO_LIST } from "./gqlquery";
 
-export let MOCK_REPOS = [
+export const MOCK_REPOS = [
     {
         "request": {
             "query": QUERY_REPO_LIST,
@@ -10,7 +10,7 @@ export let MOCK_REPOS = [
                 "query": "tennis",
                 "type": "REPOSITORY"
             },
-            "errorPolicy": 'all'
+            "errorPolicy": "all"
         },
         "result": {
             "data": {
@@ -941,9 +941,9 @@ export const ERROR_MOCK_REPOS = [
                 "query": "tennis",
                 "type": "REPOSITORY"
             },
-            "errorPolicy": 'all'
+            "errorPolicy": "all"
         },
-        error: new Error('An error occurred')
+        error: new Error("An error occurred")
     }
 ];
 
@@ -957,7 +957,7 @@ export const EMPTY_MOCK_REPOS = [
                 "query": "tennis",
                 "type": "REPOSITORY"
             },
-            "errorPolicy": 'all'
+            "errorPolicy": "all"
         },
         "result": {
             "data": {}

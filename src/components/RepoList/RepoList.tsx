@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Alert, Pagination } from '@material-ui/lab';
-import RepoSearch from '../RepoSearch/RepoSearch';
-import { CircularProgress } from '@material-ui/core';
-import useRepoList from '../../hooks/useRepoList';
+import React from "react";
+import styled from "styled-components";
+import { Alert, Pagination } from "@material-ui/lab";
+import RepoSearch from "../RepoSearch/RepoSearch";
+import { CircularProgress } from "@material-ui/core";
+import useRepoList from "../../hooks/useRepoList";
 
 const RepoListContainer = styled.div`
     display: flex;
@@ -47,6 +47,7 @@ const RepoList: React.FC  = () => {
     const {
         loading,
         error,
+        validationError,
         data,
         searchTitle,
         repos,
@@ -61,8 +62,9 @@ const RepoList: React.FC  = () => {
     return (
         <RepoListContainer>
             <RepoListHeader>Github Repo List</RepoListHeader>
-            <RepoSearch 
+            <RepoSearch
                 searchTitle = {searchTitle}
+                validationError={validationError}
                 onChangeRepoTitleSearch = {onChangeRepoTitleSearch}
                 onClickSearchForRepoTitles = {onClickSearchForRepoTitles}
             />
@@ -74,42 +76,46 @@ const RepoList: React.FC  = () => {
                             severity="error"
                         >Error fetching repos from api!!!</Alert>
                     </RepoListBodySection>
-                ): null }
-                {loading? (
-                    <RepoListBodySection>
-                        <CircularProgress />
-                    </RepoListBodySection>
                 ): (
                     <>
-                        {!data || (data && data.search && (data.search.edges.length === 0) && searchTitle)?(
-                            <Alert
-                                data-testid='repo-list-empty-warning'
-                                severity="warning"
-                            >No github repos found!!!</Alert>
-                        ):(
-                            <ul data-testid='repo-list-container'>
-                                {repos && repos[page] && repos[page].map((repo, index) => (
-                                    <li data-testid={`repo-${index}`} key={`repo-${index}`}>
-                                        <RepoListItemContainer key={repo.url}>
-                                            <a data-testid={`repo-url-${index}`} href={repo.url}>{repo.url}</a>
-                                            <PadLeft10>-</PadLeft10>
-                                            <PadLeft10>🌟</PadLeft10>
-                                            <PadLeft10>
-                                                <div data-testid={`repo-stars-${repo.stargazerCount}`}>{repo.stargazerCount}</div>
-                                            </PadLeft10>
-                                            <PadLeft10>-</PadLeft10>
-                                            <PadLeft10>🍴</PadLeft10>
-                                            <PadLeft10>
-                                                <div data-testid={`repo-forks-${repo.forkCount}`}>{repo.forkCount}</div>
-                                            </PadLeft10>
-                                        </RepoListItemContainer>
-                                    </li>
-                                ))}
-                            </ul>
+                        {loading? (
+                            <RepoListBodySection>
+                                <CircularProgress />
+                            </RepoListBodySection>
+                        ): (
+                            <>
+                                {!data || (data && data.search && (data.search.edges.length === 0) && searchTitle)?(
+                                    <Alert
+                                        data-testid='repo-list-empty-warning'
+                                        severity="warning"
+                                    >No github repos found!!!</Alert>
+                                ):(
+                                    <ul data-testid='repo-list-container'>
+                                        {repos && repos[page] && repos[page].map((repo, index) => (
+                                            <li data-testid={`repo-${index}`} key={`repo-${index}`}>
+                                                <RepoListItemContainer key={repo.url}>
+                                                    <a data-testid={`repo-url-${index}`} href={repo.url}>{repo.url}</a>
+                                                    <PadLeft10>-</PadLeft10>
+                                                    <PadLeft10>🌟</PadLeft10>
+                                                    <PadLeft10>
+                                                        <div data-testid={`repo-stars-${repo.stargazerCount}`}>{repo.stargazerCount}</div>
+                                                    </PadLeft10>
+                                                    <PadLeft10>-</PadLeft10>
+                                                    <PadLeft10>🍴</PadLeft10>
+                                                    <PadLeft10>
+                                                        <div data-testid={`repo-forks-${repo.forkCount}`}>{repo.forkCount}</div>
+                                                    </PadLeft10>
+                                                </RepoListItemContainer>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                                
+                            </>
                         )}
-                        
                     </>
                 )}
+                
             </RepoListBody>
             <RepoListFooter hide={repos.length === 0}>
                 <RepoListBodySection>
