@@ -42,7 +42,7 @@ to test our image. Next, open `http://localhost` to open our app.
 
 ### Note
 
-* In the `src/util/constants.ts` file, I have listed the personal access token to access github api. This expires after few usages. If this expires, please send me an email and I will try to refresh the token and push it to the remote repo.
+* In the `src/util/constants.ts` file, I have listed my personal access token in `TOKEN` constant to access github api. In order to access GitHub GraphQL API please generate a Personal Access Token in GitHub and copy and paste it to this value.
 * Images of various screens in the app is mentioned in the `src/images` directory
 * Due to time restrictions, I haven't got chance to address all eslint warnings.
 * If more time, I would love to add more test cases, extra validations and integration tests using cypress.
